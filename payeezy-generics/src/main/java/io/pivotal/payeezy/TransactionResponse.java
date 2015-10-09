@@ -150,11 +150,6 @@ public class TransactionResponse {
 		return error;
 	}
 
-	// public void setErrMessage(ArrayList<String> messages){
-	// error= new Error();
-	// error.setMessage(messages);
-	// }
-
 	public String getCorrelationID() {
 		return correlationID;
 	}
@@ -162,9 +157,5 @@ public class TransactionResponse {
 	public void setCorrelationID(String correlationID) {
 		this.correlationID = correlationID;
 	}
-
-	/*
-	 * public void setError(Error error) { this.error = error; }
-	 */
 
 }

@@ -4,7 +4,6 @@ import java.nio.charset.Charset;
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -32,10 +31,6 @@ public class PayeezyRequest {
 
 	private static Logger logger = Logger.getLogger(PayeezyRequest.class);
 
-	private final static String transactionURL = "https://api-cert.payeezy.com/v1/transactions";
-
-	private final static String headerContentType = "application/json";
-
 	@Autowired
 	RestTemplate restTemplate;
 
@@ -54,7 +49,7 @@ public class PayeezyRequest {
 			header.add(key, encriptedKey.get(key));
 		}
 
-		header.add("Accept", headerContentType);
+		header.add("Accept", Constants.HEADER_CONTENT_TYPE);
 
 		header.setContentType(MediaType.APPLICATION_JSON);
 
@@ -71,14 +66,12 @@ public class PayeezyRequest {
 
 	private static byte[] toHex(byte[] arr) {
 		String hex = Hex.encodeHexString(arr);
-		logger.info("Apache common value:{}" + hex);
 		return hex.getBytes();
 	}
 
 	public static String getMacValue(Map<String, String> data) throws Exception {
 		Mac mac = Mac.getInstance("HmacSHA256");
 		String apiSecret = data.get(HeaderField.APISECRET);
-		logger.debug("API_SECRET:{}" + apiSecret);
 		SecretKeySpec secret_key = new SecretKeySpec(apiSecret.getBytes(),
 				"HmacSHA256");
 		mac.init(secret_key);
@@ -91,12 +84,9 @@ public class PayeezyRequest {
 		if (data.get(HeaderField.PAYLOAD) != null)
 			buff.append(data.get(HeaderField.PAYLOAD));
 
-		logger.info(buff.toString());
 		byte[] macHash = mac.doFinal(buff.toString().getBytes("UTF-8"));
-		logger.info("MacHAsh:{}" + Arrays.toString(macHash));
 
 		String authorizeString = Base64.encodeBase64String(toHex(macHash));
-		logger.info("Authorize: {}" + authorizeString);
 		return authorizeString;
 
 	}
@@ -107,7 +97,6 @@ public class PayeezyRequest {
 		try {
 
 			nonce = Math.abs(SecureRandom.getInstance("SHA1PRNG").nextLong());
-			logger.debug("SecureRandom nonce:{}" + nonce);
 			returnMap.put(HeaderField.NONCE, Long.toString(nonce));
 			returnMap.put(HeaderField.APIKEY, Credentials.API_KEY);
 			returnMap.put(HeaderField.TIMESTAMP,
@@ -134,7 +123,7 @@ public class PayeezyRequest {
 		}
 		System.out.println("Headers: " + request.getHeaders().toString());
 		System.out.println("Body: " + request.getBody().toString());
-		String url = new String(transactionURL);
+		String url = new String(Constants.TRANSACTION_URL);
 		RestTemplate restTemplate = new RestTemplate();
 
 		try {

@@ -4,6 +4,8 @@ import org.apache.log4j.Logger;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
+import com.google.gson.Gson;
+
 
 @SpringBootApplication
 public class CreditCardPaymentsApplication {
@@ -23,9 +25,19 @@ public class CreditCardPaymentsApplication {
 	
     public static void main(String[] args) {
         SpringApplication.run(CreditCardPaymentsApplication.class, args);
-        String payload = getPayload();
-        PayeezyRequest request = new CreditCardTransactionRequest(payload);
-        String response = request.post();
+        Card card = new Card("visa", "John Smith", "4788250000028291", "1020", "123");
+        TransactionRequest request = new TransactionRequest();
+        request.setAmount("1299");
+        request.setCurrency("USD");
+        request.setPaymentMethod("credit_card");
+        request.setTransactionType("authorize");
+        request.setReferenceNo("Astonishing-Sale");
+        request.setCard(card);
+        // String payload = getPayload();
+        Gson gson = new Gson();
+        String payload = gson.toJson(request);
+        PayeezyRequest payeezyRequest = new CreditCardTransactionRequest(payload);
+        String response = payeezyRequest.post();
         logger.info("Response: " + response);
     }
 }
