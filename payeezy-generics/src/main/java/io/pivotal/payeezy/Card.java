@@ -1,12 +1,11 @@
 package io.pivotal.payeezy;
 
-
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonAutoDetect.Visibility;
 
 @JsonAutoDetect(fieldVisibility = Visibility.ANY, getterVisibility = Visibility.NONE, setterVisibility = Visibility.NONE)
-public class Card implements Cloneable  {
+public class Card implements Cloneable {
 
 	public Card(String type, String name, String number, String expiryDt,
 			String cvv) {
@@ -20,6 +19,7 @@ public class Card implements Cloneable  {
 
 	public Card() {
 	}
+
 	@JsonProperty("type")
 	private String type;
 	@JsonProperty("cardholder_name")
@@ -28,39 +28,37 @@ public class Card implements Cloneable  {
 	private String number;
 	@JsonProperty("exp_date")
 	private String expiryDt;
-    @JsonProperty("cvv")
+	@JsonProperty("cvv")
 	private String cvv;
-	
-	
-	
+
 	public String getType() {
 		return type;
 	}
-	
+
 	public void setType(String type) {
 		this.type = type;
 	}
-	
+
 	public String getName() {
 		return name;
 	}
-	
+
 	public void setName(String name) {
 		this.name = name;
 	}
-	
+
 	public String getNumber() {
 		return number;
 	}
-	
+
 	public void setNumber(String nmber) {
 		this.number = nmber;
 	}
-	
+
 	public String getExpiryDt() {
 		return expiryDt;
 	}
-	
+
 	public void setExpiryDt(String expiryDt) {
 		this.expiryDt = expiryDt;
 	}
@@ -72,11 +70,11 @@ public class Card implements Cloneable  {
 	public void setCvv(String cvv) {
 		this.cvv = cvv;
 	}
-	
+
 	@Override
 	public Card clone() throws CloneNotSupportedException {
 		// TODO Auto-generated method stub
-		return (Card)super.clone();
+		return (Card) super.clone();
 	}
 
 }

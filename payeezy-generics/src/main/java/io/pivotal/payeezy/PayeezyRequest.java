@@ -27,28 +27,21 @@ import org.springframework.web.client.RestTemplate;
 import io.pivotal.payeezy.TransactionResponse;
 
 public class PayeezyRequest {
-	
 
 	private String payload;
-	
+
 	private static Logger logger = Logger.getLogger(PayeezyRequest.class);
 
-
-
 	private final static String transactionURL = "https://api-cert.payeezy.com/v1/transactions";
-
-
 
 	private final static String headerContentType = "application/json";
 
 	@Autowired
 	RestTemplate restTemplate;
-	
-	protected PayeezyRequest(String payload){
-		this.payload = payload;		
-	}
 
-	
+	protected PayeezyRequest(String payload) {
+		this.payload = payload;
+	}
 
 	private HttpHeaders getHttpHeader() throws Exception {
 		Map<String, String> encriptedKey = getSecurityKeys();
@@ -76,13 +69,12 @@ public class PayeezyRequest {
 		return header;
 	}
 
-    
-    private static byte[] toHex(byte[] arr) {
-        String hex=Hex.encodeHexString(arr);
-        logger.info("Apache common value:{}" + hex);
-        return hex.getBytes();
-    }
-    
+	private static byte[] toHex(byte[] arr) {
+		String hex = Hex.encodeHexString(arr);
+		logger.info("Apache common value:{}" + hex);
+		return hex.getBytes();
+	}
+
 	public static String getMacValue(Map<String, String> data) throws Exception {
 		Mac mac = Mac.getInstance("HmacSHA256");
 		String apiSecret = data.get(HeaderField.APISECRET);
@@ -91,7 +83,8 @@ public class PayeezyRequest {
 				"HmacSHA256");
 		mac.init(secret_key);
 		StringBuilder buff = new StringBuilder();
-		buff.append(data.get(HeaderField.APIKEY)).append(data.get(HeaderField.NONCE))
+		buff.append(data.get(HeaderField.APIKEY))
+				.append(data.get(HeaderField.NONCE))
 				.append(data.get(HeaderField.TIMESTAMP));
 		if (data.get(HeaderField.TOKEN) != null)
 			buff.append(data.get(HeaderField.TOKEN));
@@ -108,8 +101,7 @@ public class PayeezyRequest {
 
 	}
 
-	private Map<String, String> getSecurityKeys()
-			throws Exception {
+	private Map<String, String> getSecurityKeys() throws Exception {
 		Map<String, String> returnMap = new HashMap<String, String>();
 		long nonce;
 		try {
@@ -118,7 +110,8 @@ public class PayeezyRequest {
 			logger.debug("SecureRandom nonce:{}" + nonce);
 			returnMap.put(HeaderField.NONCE, Long.toString(nonce));
 			returnMap.put(HeaderField.APIKEY, Credentials.API_KEY);
-			returnMap.put(HeaderField.TIMESTAMP, Long.toString(System.currentTimeMillis()));
+			returnMap.put(HeaderField.TIMESTAMP,
+					Long.toString(System.currentTimeMillis()));
 			returnMap.put(HeaderField.TOKEN, Credentials.MERCHANT_TOKEN);
 			returnMap.put(HeaderField.APISECRET, Credentials.API_SECRET);
 			returnMap.put(HeaderField.PAYLOAD, payload);
@@ -131,7 +124,6 @@ public class PayeezyRequest {
 		return returnMap;
 	}
 
-	
 	public String post() {
 		HttpEntity<String> request = null;
 		try {
