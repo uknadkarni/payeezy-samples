@@ -1,31 +1,35 @@
 package io.pivotal.payeezy;
 
-import org.codehaus.jackson.annotate.JsonAutoDetect;
-import org.codehaus.jackson.annotate.JsonProperty;
-import org.codehaus.jackson.annotate.JsonAutoDetect.Visibility;
+import com.fasterxml.jackson.annotation.JsonAutoDetect;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
-@JsonAutoDetect(fieldVisibility = Visibility.ANY, getterVisibility = Visibility.NONE, setterVisibility = Visibility.NONE)
-public class Token {
 
+
+
+@JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY, getterVisibility = JsonAutoDetect.Visibility.NONE, setterVisibility = JsonAutoDetect.Visibility.NONE)
+public class Token implements Cloneable  {
+
+	public Token() {
+	}
 	@JsonProperty("token_type")
 	private String tokenType;
-
+		    
 	@JsonProperty("token_data")
 	private Transarmor tokenData;
-
+		    
 	public String getTokenType() {
-		return tokenType;
+	    return tokenType;
 	}
-
+	
 	public void setTokenType(String tokenType) {
-		this.tokenType = tokenType;
+		    this.tokenType = tokenType;
 	}
 
 	public Transarmor getTokenData() {
-		return tokenData;
+	     return tokenData;
 	}
-
-	public void setTokenData(Transarmor tokenData) {
-		this.tokenData = tokenData;
-	}
+	    
+    public void setTokenData(Transarmor tokenData) {
+        this.tokenData = tokenData;
+    }
 }

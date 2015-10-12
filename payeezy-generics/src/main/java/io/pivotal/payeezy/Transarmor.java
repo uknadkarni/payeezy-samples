@@ -1,21 +1,19 @@
 package io.pivotal.payeezy;
 
-import org.codehaus.jackson.annotate.JsonAutoDetect;
-import org.codehaus.jackson.annotate.JsonProperty;
-import org.codehaus.jackson.annotate.JsonAutoDetect.Visibility;
+import com.fasterxml.jackson.annotation.JsonAutoDetect;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
-@JsonAutoDetect(fieldVisibility = Visibility.ANY, getterVisibility = Visibility.NONE, setterVisibility = Visibility.NONE)
+
+@JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY, getterVisibility = JsonAutoDetect.Visibility.NONE, setterVisibility = JsonAutoDetect.Visibility.NONE)
 public class Transarmor extends Card {
-
 	@JsonProperty("value")
-	private String token;
+	private String value;
 
 	public String getValue() {
-		return token;
+		return value;
 	}
 
 	public void setValue(String value) {
-		this.token = value;
+		this.value = value;
 	}
-
 }

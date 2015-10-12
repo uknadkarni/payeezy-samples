@@ -1,38 +1,39 @@
 package io.pivotal.payeezy;
 
-import org.codehaus.jackson.annotate.JsonAutoDetect;
-import org.codehaus.jackson.annotate.JsonAutoDetect.Visibility;
-import org.codehaus.jackson.annotate.JsonProperty;
 
-@JsonAutoDetect(fieldVisibility = Visibility.ANY, getterVisibility = Visibility.NONE, setterVisibility = Visibility.NONE)
+import com.fasterxml.jackson.annotation.JsonAutoDetect;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonProperty;
+@JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY, getterVisibility = JsonAutoDetect.Visibility.NONE, setterVisibility = JsonAutoDetect.Visibility.NONE)
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class Address {
 
 	public Address() {
 	}
-
 	@JsonProperty("name")
 	private String name;
 
 	@JsonProperty("street")
 	private String addressLine1;
 
+	
 	@JsonProperty("state_province")
 	private String state;
-
+	
 	@JsonProperty("city")
 	private String city;
-
+	
 	@JsonProperty("country")
 	private String country;
-
+	
 	@JsonProperty("email")
 	private String email;
-
+	
 	private Phone phone;
-
+	
 	@JsonProperty("zip_postal_code")
 	private String zip;
-
+	
 	public String getZip() {
 		return zip;
 	}
@@ -54,7 +55,7 @@ public class Address {
 	public String getAddressLine1() {
 		return addressLine1;
 	}
-
+	
 	@JsonProperty("street")
 	public void setAddressLine1(String addressLine1) {
 		this.addressLine1 = addressLine1;
@@ -63,7 +64,7 @@ public class Address {
 	public String getState() {
 		return state;
 	}
-
+	
 	@JsonProperty("state_province")
 	public void setState(String state) {
 		this.state = state;
@@ -105,27 +106,26 @@ public class Address {
 		this.phone = phone;
 	}
 
-	public static class Phone {
+	public static class Phone{
 		@JsonProperty("type")
 		private String type;
 		@JsonProperty("number")
 		private String number;
-
 		public String getType() {
 			return type;
 		}
-
 		public void setType(String type) {
 			this.type = type;
 		}
-
 		public String getNumber() {
 			return number;
 		}
-
 		public void setNumber(String number) {
 			this.number = number;
 		}
 	}
+	
+	
+	
 
 }
